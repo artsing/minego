@@ -28,6 +28,10 @@ func (this *BaseController) ParseBody(v interface{}) error {
 	return json.Unmarshal(this.Ctx.Input.RequestBody, v)
 }
 
+// Header 设置key, value
+func (this *BaseController)Header(key, value string)  {
+	this.Ctx.Output.Header(key, value)
+}
 
 
 // ResJson 响应json数据
