@@ -12,47 +12,47 @@ type UsersControllers struct {
 	BaseController
 }
 
-func (this *UsersControllers)Get()  {
+func (c *UsersControllers)Get()  {
 	var page, limit int
-	page, _ = this.GetInt("_page", page)
-	limit, _ =this.GetInt("_limit", limit)
+	page, _ = c.GetInt("_page", page)
+	limit, _ =c.GetInt("_limit", limit)
 
 	users, err := mgo.GetUsers(page, limit)
 	if err != nil {
-		this.ResJson(users)
+		c.ResJson(users)
 	}
 
 	count, _ := mgo.Count()
-	this.Ctx.Output.Header("x-total-count", strconv.Itoa(count))
-	this.ResJson(users)
+	c.Header("x-total-count", strconv.Itoa(count))
+	c.ResJson(users)
 }
 
-func (this *UsersControllers)Post()  {
+func (c *UsersControllers)Post()  {
 	user := models.User{ID: bson.NewObjectId()}
-	err := this.ParseBody(&user)
+	err := c.ParseBody(&user)
 	if err != nil {
 		beego.Debug(err)
 	}
 
 	mgo.PostUser(user)
-	this.Get()
+	c.Get()
 }
 
-func (this *UsersControllers)Delete()  {
-	id := this.Ctx.Input.Param(":id")
+func (c *UsersControllers)Delete()  {
+	id := c.Ctx.Input.Param(":id")
 	mgo.DeleteUser(id)
 
-	this.Get()
+	c.Get()
 }
 
-func (this *UsersControllers)Patch()  {
-	id := this.Ctx.Input.Param(":id")
+func (c *UsersControllers)Patch()  {
+	id := c.Ctx.Input.Param(":id")
 	user := models.User{ID: bson.ObjectIdHex(id)}
-	err := this.ParseBody(&user)
+	err := c.ParseBody(&user)
 	if err != nil {
 		beego.Debug(err)
 	}
 	mgo.PatchUser(user)
 
-	this.Get()
+	c.Get()
 }

@@ -24,38 +24,38 @@ type BaseController struct {
 }
 
 // ParseBody 解析请求的body数据
-func (this *BaseController) ParseBody(v interface{}) error {
-	return json.Unmarshal(this.Ctx.Input.RequestBody, v)
+func (c *BaseController) ParseBody(v interface{}) error {
+	return json.Unmarshal(c.Ctx.Input.RequestBody, v)
 }
 
 // Header 设置key, value
-func (this *BaseController)Header(key, value string)  {
-	this.Ctx.Output.Header(key, value)
+func (c *BaseController)Header(key, value string)  {
+	c.Ctx.Output.Header(key, value)
 }
 
 
 // ResJson 响应json数据
-func (this *BaseController) ResJson(v interface{}) {
-	this.Data["json"] = v
-	this.ServeJSON()
+func (c *BaseController) ResJson(v interface{}) {
+	c.Data["json"] = v
+	c.ServeJSON()
 }
 
 // Success 响应成功数据
-func (this *BaseController) Success(data interface{}, msg string) {
+func (c *BaseController) Success(data interface{}, msg string) {
 	result := ResResult{
 		Status:  SUCCESS,
 		Data:    data,
 		Message: msg,
 	}
-	this.ResJson(result)
+	c.ResJson(result)
 }
 
 // Error 响应异常数据
-func (this *BaseController) Error(status int, msg string, err error) {
+func (c *BaseController) Error(msg string, err error) {
 	result := ResResult{
-		Status:  status,
+		Status:  Error,
 		Message: msg,
 	}
 	beego.Error(fmt.Sprintf("%s:%v", msg, err))
-	this.ResJson(result)
+	c.ResJson(result)
 }
