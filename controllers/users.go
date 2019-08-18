@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"minego/models/mgo"
-	"minego/models"
 	"github.com/astaxie/beego"
 	"gopkg.in/mgo.v2/bson"
+	"minego/models"
+	"minego/models/mgo"
 	"strconv"
 )
 
@@ -34,13 +34,13 @@ func (c *UsersControllers)Post()  {
 		beego.Debug(err)
 	}
 
-	mgo.PostUser(user)
+	err = mgo.PostUser(user)
 	c.Get()
 }
 
 func (c *UsersControllers)Delete()  {
 	id := c.Ctx.Input.Param(":id")
-	mgo.DeleteUser(id)
+	_ = mgo.DeleteUser(id)
 
 	c.Get()
 }
@@ -52,7 +52,7 @@ func (c *UsersControllers)Patch()  {
 	if err != nil {
 		beego.Debug(err)
 	}
-	mgo.PatchUser(user)
+	_ = mgo.PatchUser(user)
 
 	c.Get()
 }

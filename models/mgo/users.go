@@ -1,8 +1,8 @@
 package mgo
 
 import (
-	"minego/models"
 	"gopkg.in/mgo.v2/bson"
+	"minego/models"
 )
 
 const USERS = "users"

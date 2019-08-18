@@ -1,9 +1,9 @@
 package mgo
 
-import  (
+import (
+	"github.com/astaxie/beego"
 	"gopkg.in/mgo.v2/bson"
 	"mine/mongo"
-	"github.com/astaxie/beego"
 )
 
 var (
